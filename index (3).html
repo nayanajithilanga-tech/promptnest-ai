@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>PromptNest AI – Free AI Content Creator Tools | YouTube, TikTok, Instagram, LinkedIn</title>
+<meta name="description" content="PromptNest AI offers free AI-powered tools for content creators – generate YouTube titles, social media captions, blog outlines, hashtags, LinkedIn posts, TikTok hooks and more. Powered by OpenAI GPT-4."/>
+<meta name="keywords" content="AI prompt generator, content creator tools, YouTube title generator, TikTok caption, Instagram bio, free AI tools 2026, SEO content, OpenAI"/>
+<meta name="author" content="Dilshan Nayanajith Ilangasinghe"/>
+<link rel="canonical" href="https://promptnest.ai/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="PromptNest AI – Free AI Prompt & Content Creator Tools"/>
+<meta property="og:description" content="Generate captions, titles, prompts, hashtags & more with real AI. Free tools for every creator."/>
+<meta property="og:url" content="https://promptnest.ai/"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════ */
+:root {
+  --bg:     #070b14;
+  --bg2:    #0c1120;
+  --bg3:    #111827;
+  --card:   #131c2e;
+  --card2:  #1a2540;
+  --accent: #22d3ee;    /* cyan */
+  --accent2:#818cf8;   /* indigo */
+  --accent3:#fb923c;   /* orange */
+  --success:#34d399;
+  --danger: #f87171;
+  --text:   #e2e8f0;
+  --text2:  #94a3b8;
+  --text3:  #475569;
+  --border: rgba(255,255,255,0.06);
+  --border2:rgba(34,211,238,0.2);
+  --glow:   0 0 60px rgba(34,211,238,0.12);
+  --radius: 16px;
+  --radius-lg: 24px;
+  --font:   'Syne', sans-serif;
+  --font2:  'DM Sans', sans-serif;
+  --shadow: 0 16px 48px rgba(0,0,0,0.5);
+  --ease:   cubic-bezier(0.4,0,0.2,1);
+  --transition: all 0.25s var(--ease);
+}
+.light {
+  --bg:#f1f5fb; --bg2:#e8eef8; --bg3:#dde6f5;
+  --card:#fff; --card2:#f5f8ff;
+  --text:#0f172a; --text2:#334155; --text3:#64748b;
+  --border:rgba(0,0,0,0.07); --border2:rgba(34,211,238,0.35);
+  --glow:0 0 40px rgba(34,211,238,0.1);
+  --shadow:0 16px 48px rgba(0,0,0,0.1);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:var(--font2);line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font2)}
+img{max-width:100%}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--card2);border-radius:3px}
+::selection{background:rgba(34,211,238,0.25)}
+
+/* ═══════════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════════ */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:64px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+  background:rgba(7,11,20,0.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);transition:var(--transition)
+}
+.light nav{background:rgba(241,245,251,0.9)}
+.nav-logo {
+  font-family:var(--font);font-size:1.35rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.nav-links{display:flex;gap:2px;align-items:center}
+.nav-links a {
+  color:var(--text2);padding:6px 14px;border-radius:8px;
+  font-size:.85rem;font-weight:500;transition:var(--transition)
+}
+.nav-links a:hover{color:var(--accent);background:rgba(34,211,238,0.06)}
+.nav-actions{display:flex;gap:8px;align-items:center}
+#themeBtn {
+  background:var(--card);border:1px solid var(--border);color:var(--text2);
+  padding:6px 12px;border-radius:8px;font-size:.85rem;transition:var(--transition)
+}
+#themeBtn:hover{border-color:var(--accent);color:var(--accent)}
+.btn-chat-nav {
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;color:#0a0d1a;padding:7px 16px;border-radius:8px;
+  font-size:.85rem;font-weight:700;transition:var(--transition)
+}
+.btn-chat-nav:hover{opacity:.88;transform:scale(1.02)}
+.hamburger{display:none;background:none;border:none;color:var(--text);padding:8px;font-size:1.3rem}
+.mobile-nav{display:none;position:fixed;top:64px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:12px;z-index:899}
+.mobile-nav a{display:block;color:var(--text2);padding:10px 14px;border-radius:8px;font-size:.9rem;transition:var(--transition)}
+.mobile-nav a:hover{color:var(--accent);background:rgba(34,211,238,0.06)}
+
+/* ═══════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════ */
+.hero {
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:100px 24px 80px;position:relative;overflow:hidden
+}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.orb {
+  position:absolute;border-radius:50%;filter:blur(100px);opacity:.18;
+  animation:float 10s ease-in-out infinite
+}
+.orb1{width:700px;height:700px;background:var(--accent);top:-300px;left:-200px}
+.orb2{width:600px;height:600px;background:var(--accent2);bottom:-250px;right:-150px;animation-delay:-5s}
+.orb3{width:400px;height:400px;background:var(--accent3);top:40%;left:50%;transform:translate(-50%,-50%);animation-delay:-2.5s;opacity:.12}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-30px)}}
+.hero-grid-overlay {
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(34,211,238,.03) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(34,211,238,.03) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.hero-content{position:relative;z-index:1;max-width:900px;animation:heroIn .7s ease both}
+@keyframes heroIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-badge {
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(34,211,238,0.08);border:1px solid rgba(34,211,238,0.25);
+  color:var(--accent);padding:6px 18px;border-radius:100px;
+  font-size:.78rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:28px
+}
+.badge-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero h1 {
+  font-family:var(--font);font-size:clamp(2.5rem,6vw,4.8rem);
+  font-weight:800;line-height:1.05;margin-bottom:22px;letter-spacing:-1.5px
+}
+.hero h1 .glow-text {
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 60%,var(--accent3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.hero p{font-size:1.1rem;color:var(--text2);max-width:560px;margin:0 auto 40px;line-height:1.75}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:60px}
+.btn-primary {
+  background:linear-gradient(135deg,var(--accent),#0891b2);
+  color:#070b14;padding:14px 32px;border:none;border-radius:12px;
+  font-family:var(--font);font-size:.95rem;font-weight:700;transition:var(--transition);
+  display:inline-flex;align-items:center;gap:8px
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(34,211,238,.35)}
+.btn-secondary {
+  background:rgba(255,255,255,0.05);color:var(--text);padding:14px 32px;
+  border:1px solid var(--border2);border-radius:12px;
+  font-family:var(--font);font-size:.95rem;font-weight:600;transition:var(--transition);
+  display:inline-flex;align-items:center;gap:8px
+}
+.btn-secondary:hover{background:rgba(34,211,238,0.07);border-color:var(--accent);color:var(--accent)}
+.hero-stats{display:flex;gap:48px;justify-content:center;flex-wrap:wrap}
+.stat-num{font-family:var(--font);font-size:2.2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:.8rem;color:var(--text3);font-weight:500;margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+
+/* ═══════════════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════════════ */
+section{padding:96px 24px}
+.container{max-width:1200px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:60px}
+.section-tag {
+  display:inline-block;background:rgba(34,211,238,0.08);color:var(--accent);
+  border:1px solid rgba(34,211,238,0.2);padding:4px 14px;border-radius:100px;
+  font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px
+}
+.section-header h2 {
+  font-family:var(--font);font-size:clamp(1.8rem,4vw,2.8rem);
+  font-weight:800;letter-spacing:-.5px;margin-bottom:12px
+}
+.gradient-text {
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.section-header p{color:var(--text2);font-size:1rem;max-width:540px;margin:0 auto;line-height:1.7}
+
+/* ═══════════════════════════════════════════════════
+   TOOLS SECTION
+═══════════════════════════════════════════════════ */
+#tools{background:var(--bg2)}
+.tools-search{display:flex;justify-content:center;margin-bottom:44px}
+.search-wrap{position:relative;width:100%;max-width:460px}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:1rem}
+#toolSearch {
+  width:100%;padding:12px 16px 12px 44px;background:var(--card);
+  border:1px solid var(--border);border-radius:12px;color:var(--text);
+  font-size:.9rem;font-family:var(--font2);outline:none;transition:var(--transition)
+}
+#toolSearch:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.1)}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.tool-card {
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:24px;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden
+}
+.tool-card::before {
+  content:'';position:absolute;inset:0;opacity:0;transition:var(--transition);
+  background:linear-gradient(135deg,rgba(34,211,238,.05),rgba(129,140,248,.04))
+}
+.tool-card:hover{border-color:rgba(34,211,238,.3);transform:translateY(-4px);box-shadow:var(--glow)}
+.tool-card:hover::before{opacity:1}
+.tool-icon {
+  width:50px;height:50px;border-radius:14px;display:flex;align-items:center;
+  justify-content:center;font-size:1.5rem;margin-bottom:16px
+}
+.tool-card h3{font-family:var(--font);font-size:1rem;font-weight:700;margin-bottom:6px}
+.tool-card p{font-size:.85rem;color:var(--text2);line-height:1.5}
+.tool-badge {
+  position:absolute;top:14px;right:14px;
+  background:rgba(34,211,238,0.12);color:var(--accent);
+  border:1px solid rgba(34,211,238,0.2);padding:2px 8px;
+  border-radius:100px;font-size:.68rem;font-weight:700;letter-spacing:.4px
+}
+.tool-badge.hot{background:rgba(251,146,60,.12);color:var(--accent3);border-color:rgba(251,146,60,.2)}
+
+/* ═══════════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════ */
+.modal-overlay {
+  position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);
+  z-index:2000;display:none;align-items:center;justify-content:center;padding:20px
+}
+.modal-overlay.active{display:flex}
+.modal {
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);
+  width:100%;max-width:740px;max-height:90vh;overflow-y:auto;
+  padding:36px;position:relative;animation:modalIn .3s ease
+}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-close {
+  position:absolute;top:16px;right:16px;background:var(--card);border:1px solid var(--border);
+  color:var(--text2);width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:var(--transition)
+}
+.modal-close:hover{color:var(--text);border-color:var(--text3)}
+.modal-tool-icon{font-size:2rem;margin-bottom:12px}
+.modal h2{font-family:var(--font);font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.modal-subtitle{color:var(--text2);font-size:.875rem;margin-bottom:28px;line-height:1.5}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.82rem;font-weight:600;margin-bottom:6px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px}
+.form-group input,.form-group select,.form-group textarea {
+  width:100%;padding:10px 14px;background:var(--card);border:1px solid var(--border);
+  border-radius:10px;color:var(--text);font-size:.9rem;font-family:var(--font2);
+  outline:none;transition:var(--transition);resize:vertical
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.1)}
+.form-group select option{background:var(--card2)}
+.modal-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.btn-generate {
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#070b14;
+  border:none;padding:11px 26px;border-radius:10px;font-size:.9rem;
+  font-family:var(--font);font-weight:700;transition:var(--transition);
+  display:flex;align-items:center;gap:8px
+}
+.btn-generate:hover{opacity:.88;transform:translateY(-1px)}
+.btn-generate:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-regen {
+  background:var(--card);border:1px solid var(--border);color:var(--text2);
+  padding:11px 18px;border-radius:10px;font-size:.88rem;font-weight:600;transition:var(--transition)
+}
+.btn-regen:hover{border-color:var(--accent2);color:var(--accent2)}
+.btn-regen:disabled{opacity:.4;cursor:not-allowed}
+.output-area{margin-top:28px;display:none}
+.output-area.visible{display:block}
+.output-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;position:relative}
+.output-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.output-label{font-size:.8rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:6px}
+.output-meta{font-size:.75rem;color:var(--text3)}
+.btn-copy {
+  background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);
+  color:var(--accent);padding:6px 12px;border-radius:8px;
+  font-size:.78rem;font-weight:600;transition:var(--transition);display:flex;align-items:center;gap:4px
+}
+.btn-copy:hover{background:rgba(34,211,238,.2)}
+.output-content{color:var(--text);font-family:var(--font2);font-size:.88rem;line-height:1.8;white-space:pre-wrap;word-break:break-word}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(7,11,20,.3);border-top-color:#070b14;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.char-counter{font-size:.72rem;color:var(--text3);text-align:right;margin-top:4px}
+.error-msg{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.25);color:var(--danger);border-radius:10px;padding:12px 16px;font-size:.85rem;margin-top:16px}
+
+/* ═══════════════════════════════════════════════════
+   CHAT SECTION
+═══════════════════════════════════════════════════ */
+#chat-section{background:var(--bg3)}
+.chat-container {
+  max-width:820px;margin:0 auto;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  overflow:hidden;display:flex;flex-direction:column;height:640px
+}
+.chat-header {
+  display:flex;align-items:center;gap:12px;padding:18px 22px;
+  border-bottom:1px solid var(--border);background:var(--card2)
+}
+.chat-avatar {
+  width:38px;height:38px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:800;color:#070b14
+}
+.chat-header-info h4{font-family:var(--font);font-size:.95rem;font-weight:700;margin-bottom:2px}
+.chat-header-info span{font-size:.75rem;color:var(--success);display:flex;align-items:center;gap:4px}
+.online-dot{width:6px;height:6px;background:var(--success);border-radius:50%;animation:pulse 2s infinite}
+.chat-messages{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-thumb{background:var(--card2);border-radius:2px}
+.msg{display:flex;gap:10px;animation:msgIn .25s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{flex-direction:row-reverse}
+.msg-avatar {
+  width:32px;height:32px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700
+}
+.msg.ai .msg-avatar{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#070b14}
+.msg.user .msg-avatar{background:var(--card2);color:var(--text2)}
+.msg-bubble {
+  max-width:78%;padding:12px 16px;border-radius:14px;font-size:.875rem;line-height:1.7;white-space:pre-wrap;word-break:break-word
+}
+.msg.ai .msg-bubble{background:var(--bg3);border:1px solid var(--border)}
+.msg.user .msg-bubble{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#070b14;font-weight:500}
+.typing-indicator{display:flex;gap:4px;align-items:center;padding:4px 0}
+.typing-indicator span{width:6px;height:6px;background:var(--text3);border-radius:50%;animation:typing 1.2s infinite}
+.typing-indicator span:nth-child(2){animation-delay:.2s}
+.typing-indicator span:nth-child(3){animation-delay:.4s}
+@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.chat-input-area {
+  display:flex;gap:10px;padding:16px 20px;border-top:1px solid var(--border);background:var(--card2)
+}
+#chatInput {
+  flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:12px;
+  color:var(--text);font-size:.9rem;font-family:var(--font2);padding:10px 16px;
+  outline:none;resize:none;transition:var(--transition);max-height:120px;min-height:42px
+}
+#chatInput:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.1)}
+.btn-send {
+  background:linear-gradient(135deg,var(--accent),var(--accent2));color:#070b14;
+  border:none;width:44px;height:44px;border-radius:12px;
+  font-size:1.1rem;transition:var(--transition);flex-shrink:0;display:flex;align-items:center;justify-content:center
+}
+.btn-send:hover{opacity:.88;transform:scale(1.05)}
+.btn-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.chat-suggestions{display:flex;gap:8px;flex-wrap:wrap;padding:10px 20px;border-top:1px solid var(--border)}
+.suggestion-chip {
+  background:var(--bg3);border:1px solid var(--border);color:var(--text2);
+  padding:5px 12px;border-radius:100px;font-size:.78rem;cursor:pointer;transition:var(--transition)
+}
+.suggestion-chip:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ═══════════════════════════════════════════════════
+   FEATURES
+═══════════════════════════════════════════════════ */
+#features{background:var(--bg)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.feature-card {
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:28px;transition:var(--transition)
+}
+.feature-card:hover{border-color:rgba(129,140,248,.3);transform:translateY(-3px)}
+.feature-icon {
+  width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:16px
+}
+.feature-card h3{font-family:var(--font);font-size:1rem;font-weight:700;margin-bottom:8px}
+.feature-card p{font-size:.85rem;color:var(--text2);line-height:1.6}
+
+/* ═══════════════════════════════════════════════════
+   FAQ
+═══════════════════════════════════════════════════ */
+#faq{background:var(--bg2)}
+.faq-list{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:var(--transition)}
+.faq-item.open{border-color:rgba(34,211,238,.2)}
+.faq-q {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 22px;cursor:pointer;font-weight:600;font-size:.9rem;gap:12px;transition:var(--transition)
+}
+.faq-q:hover{color:var(--accent)}
+.faq-q .arrow{transition:transform .3s;flex-shrink:0;font-size:.8rem;color:var(--text3)}
+.faq-item.open .arrow{transform:rotate(180deg);color:var(--accent)}
+.faq-a{display:none;padding:0 22px 18px;color:var(--text2);font-size:.88rem;line-height:1.7}
+.faq-item.open .faq-a{display:block}
+
+/* ═══════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════ */
+footer {
+  background:var(--bg);border-top:1px solid var(--border);padding:48px 24px 32px
+}
+.footer-grid {
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px
+}
+.footer-brand p{color:var(--text3);font-size:.85rem;line-height:1.7;margin-top:12px;margin-bottom:20px;max-width:280px}
+.footer-tagline {
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.15);
+  color:var(--accent);padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:700
+}
+.footer-col h4{font-family:var(--font);font-size:.85rem;font-weight:700;margin-bottom:14px;color:var(--text)}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-col a{color:var(--text3);font-size:.85rem;transition:var(--transition)}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom {
+  max-width:1200px;margin:0 auto;padding-top:24px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:.8rem;color:var(--text3)
+}
+.powered-by{display:flex;align-items:center;gap:6px;color:var(--text3)}
+.openai-badge{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);color:var(--success);padding:2px 8px;border-radius:100px;font-size:.7rem;font-weight:700}
+
+/* ═══════════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════════ */
+#toastContainer{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast {
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:12px 18px;font-size:.85rem;min-width:240px;max-width:340px;
+  display:flex;align-items:center;gap:10px;animation:toastIn .3s ease;
+  box-shadow:var(--shadow)
+}
+.toast.success{border-color:rgba(52,211,153,.3);color:var(--success)}
+.toast.error{border-color:rgba(248,113,113,.3);color:var(--danger)}
+.toast.info{border-color:rgba(34,211,238,.3);color:var(--accent)}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+/* ═══════════════════════════════════════════════════
+   FADE-IN ANIMATION
+═══════════════════════════════════════════════════ */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════ */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:block}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .hero h1{letter-spacing:-.5px}
+  .chat-container{height:500px}
+}
+@media(max-width:480px){
+  .footer-grid{grid-template-columns:1fr}
+  .hero-stats{gap:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     NAV
+══════════════════════════════════════════════════════ -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">PromptNest AI</a>
+  <div class="nav-links">
+    <a href="#tools">🛠 Tools</a>
+    <a href="#chat-section">💬 AI Chat</a>
+    <a href="#features">✨ Features</a>
+    <a href="#faq">❓ FAQ</a>
+  </div>
+  <div class="nav-actions">
+    <button id="themeBtn" onclick="toggleTheme()">🌙 Dark</button>
+    <button class="btn-chat-nav" onclick="document.getElementById('chat-section').scrollIntoView({behavior:'smooth'})">Try AI Chat →</button>
+  </div>
+  <button class="hamburger" onclick="toggleMobileNav()">☰</button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#tools" onclick="toggleMobileNav()">🛠 Tools</a>
+  <a href="#chat-section" onclick="toggleMobileNav()">💬 AI Chat</a>
+  <a href="#features" onclick="toggleMobileNav()">✨ Features</a>
+  <a href="#faq" onclick="toggleMobileNav()">❓ FAQ</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="hero-grid-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="badge-dot"></span> Powered by OpenAI GPT-4o · Real AI · No Fake Answers</div>
+    <h1>Your AI-Powered<br><span class="glow-text">Content Studio</span></h1>
+    <p>Generate YouTube titles, TikTok hooks, Instagram captions, LinkedIn posts, blog outlines, hashtags and more — all powered by real OpenAI intelligence, not templates.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('tools').scrollIntoView({behavior:'smooth'})">🚀 Explore All Tools</button>
+      <button class="btn-secondary" onclick="document.getElementById('chat-section').scrollIntoView({behavior:'smooth'})">💬 Chat with AI</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">11</div><div class="stat-label">AI Tools</div></div>
+      <div class="stat"><div class="stat-num">GPT-4o</div><div class="stat-label">Model</div></div>
+      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Real AI</div></div>
+      <div class="stat"><div class="stat-num">Free</div><div class="stat-label">To Use</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     TOOLS
+══════════════════════════════════════════════════════ -->
+<section id="tools">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">AI TOOLS</div>
+      <h2>11 Powerful <span class="gradient-text">AI Tools</span></h2>
+      <p>Every tool uses real OpenAI GPT-4o. Every response is freshly generated — no templates, no fakes.</p>
+    </div>
+    <div class="tools-search fade-in">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="toolSearch" placeholder="Search tools…" oninput="filterTools(this.value)"/>
+      </div>
+    </div>
+    <div class="tools-grid" id="toolsGrid"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     CHAT
+══════════════════════════════════════════════════════ -->
+<section id="chat-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">AI ASSISTANT</div>
+      <h2>Chat with <span class="gradient-text">PromptNest AI</span></h2>
+      <p>Ask anything. Get expert-level answers, strategies, content ideas, and more — powered by GPT-4o.</p>
+    </div>
+    <div class="chat-container fade-in">
+      <div class="chat-header">
+        <div class="chat-avatar">P</div>
+        <div class="chat-header-info">
+          <h4>PromptNest AI</h4>
+          <span><span class="online-dot"></span> Online · GPT-4o · Real AI</span>
+        </div>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg ai">
+          <div class="msg-avatar">🤖</div>
+          <div class="msg-bubble">Hi! I'm PromptNest AI, powered by OpenAI GPT-4o. I can help you with content creation, marketing strategy, SEO, social media, blog writing, video scripts, and much more.<br><br>What would you like to create today? ✨</div>
+        </div>
+      </div>
+      <div class="chat-suggestions">
+        <div class="suggestion-chip" onclick="useSuggestion(this)">Write me a YouTube script idea</div>
+        <div class="suggestion-chip" onclick="useSuggestion(this)">Best TikTok growth strategies 2026</div>
+        <div class="suggestion-chip" onclick="useSuggestion(this)">How to grow on Instagram fast?</div>
+        <div class="suggestion-chip" onclick="useSuggestion(this)">Write a LinkedIn post about AI</div>
+      </div>
+      <div class="chat-input-area">
+        <textarea id="chatInput" placeholder="Ask anything…" rows="1" onkeydown="chatKeydown(event)" oninput="autoResize(this)"></textarea>
+        <button class="btn-send" id="sendBtn" onclick="sendChat()" title="Send">➤</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FEATURES
+══════════════════════════════════════════════════════ -->
+<section id="features">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">WHY PROMPTNEST</div>
+      <h2>Built for <span class="gradient-text">Real Results</span></h2>
+      <p>Every feature designed around what content creators actually need.</p>
+    </div>
+    <div class="features-grid fade-in">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(34,211,238,.12)">🧠</div>
+        <h3>Real OpenAI Intelligence</h3>
+        <p>Every response is freshly generated by GPT-4o. No cached answers, no templates — real AI thinking for every request.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(129,140,248,.12)">🔒</div>
+        <h3>Secure by Design</h3>
+        <p>Your API key stays on the server. The frontend never touches your credentials — enterprise-grade security architecture.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(251,146,60,.12)">⚡</div>
+        <h3>Fast & Reliable</h3>
+        <p>Direct connection to OpenAI's fastest endpoints. Get high-quality content in seconds, not minutes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(52,211,153,.12)">📋</div>
+        <h3>Copy & Use Instantly</h3>
+        <p>One-click copy on every output. Every result is formatted, ready to paste straight into YouTube, Instagram, or your editor.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(248,113,113,.12)">🎯</div>
+        <h3>Platform-Optimized Prompts</h3>
+        <p>Each tool has a hand-crafted system prompt tuned for that platform's best practices, tone, and algorithm preferences.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:rgba(34,211,238,.12)">💬</div>
+        <h3>Full AI Chat</h3>
+        <p>Beyond tools — chat with PromptNest AI about anything. Strategy, ideation, editing, feedback. Your always-on creative partner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════════════════ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">FAQ</div>
+      <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
+    </div>
+    <div class="faq-list fade-in" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block">PromptNest AI</div>
+      <p>Free AI-powered content creation tools for creators, marketers, and entrepreneurs — powered by OpenAI GPT-4o.</p>
+      <div class="footer-tagline">⚡ Powered by OpenAI GPT-4o</div>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <ul>
+        <li><a href="#tools">YouTube Titles</a></li>
+        <li><a href="#tools">TikTok Hooks</a></li>
+        <li><a href="#tools">Instagram Captions</a></li>
+        <li><a href="#tools">Blog Outlines</a></li>
+        <li><a href="#tools">Hashtag Generator</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>More Tools</h4>
+      <ul>
+        <li><a href="#tools">LinkedIn Posts</a></li>
+        <li><a href="#tools">Email Writer</a></li>
+        <li><a href="#tools">Resume Bullets</a></li>
+        <li><a href="#tools">Instagram Bio</a></li>
+        <li><a href="#chat-section">AI Chat</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="mailto:hello@promptnest.ai">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 PromptNest AI · Created by Dilshan Nayanajith Ilangasinghe</span>
+    <div class="powered-by">Powered by <span class="openai-badge">OpenAI GPT-4o</span></div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════
+     TOOL MODAL
+══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="toolModal">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     TOAST CONTAINER
+══════════════════════════════════════════════════════ -->
+<div id="toastContainer"></div>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+"use strict";
+
+// ── Config ────────────────────────────────────────────────────
+// Change this to your server's URL if deploying remotely
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? `http://localhost:3000`
+  : window.location.origin;
+
+// ── Tool Definitions ──────────────────────────────────────────
+const TOOLS = [
+  {
+    id: "youtube_title", icon: "🎬", color: "#ff4444", label: "NEW",
+    name: "YouTube Title Generator",
+    desc: "Generate 10 SEO-optimized, high-CTR YouTube titles using real AI.",
+    fields: [
+      { id:"topic", label:"Video Topic", type:"input", placeholder:"e.g. How to grow on YouTube in 2026" },
+      { id:"style", label:"Style", type:"select", options:["Educational","Entertainment","Motivational","Documentary","Tutorial","Vlog","Review"] },
+      { id:"audience", label:"Target Audience (optional)", type:"input", placeholder:"e.g. beginner content creators" }
+    ]
+  },
+  {
+    id: "youtube_description", icon: "📝", color: "#ff6644", label: "SEO",
+    name: "YouTube Description Writer",
+    desc: "Full SEO-optimized YouTube descriptions with chapters, CTAs, and hashtags.",
+    fields: [
+      { id:"topic", label:"Video Title / Topic", type:"input", placeholder:"e.g. Complete Guide to YouTube SEO" },
+      { id:"type", label:"Video Type", type:"select", options:["Educational","Tutorial","Vlog","Review","Commentary","Documentary","Entertainment"] },
+      { id:"niche", label:"Channel Niche", type:"input", placeholder:"e.g. Digital Marketing, Gaming, Fitness" }
+    ]
+  },
+  {
+    id: "instagram_caption", icon: "📸", color: "#e1306c", label: "HOT",
+    name: "Instagram Caption Generator",
+    desc: "5 distinct caption styles with hashtag strategy — storytelling, educational, bold & more.",
+    fields: [
+      { id:"topic", label:"Post Topic / Idea", type:"input", placeholder:"e.g. Morning routine for productivity" },
+      { id:"niche", label:"Your Niche", type:"input", placeholder:"e.g. Wellness, Business, Travel" },
+      { id:"tone", label:"Tone", type:"select", options:["Engaging","Inspiring","Funny","Informative","Emotional","Bold","Professional"] }
+    ]
+  },
+  {
+    id: "tiktok_hook", icon: "⚡", color: "#69c9d0", label: "HOT",
+    name: "TikTok Hook Generator",
+    desc: "10 viral-ready TikTok opening hooks that stop the scroll in 3 seconds.",
+    fields: [
+      { id:"topic", label:"Video Topic", type:"input", placeholder:"e.g. How I made $5000 in a month" },
+      { id:"style", label:"Hook Style", type:"select", options:["Shocking Stat","Bold Claim","Story Opener","Question","Controversial Take","Relatable Moment","Challenge"] },
+      { id:"format", label:"Video Format", type:"select", options:["Talking Head / POV","Voiceover","Tutorial","Storytime","Day in My Life","Reaction"] }
+    ]
+  },
+  {
+    id: "blog_outline", icon: "✍️", color: "#818cf8", label: "SEO",
+    name: "Blog Post Outline",
+    desc: "Full publication-ready blog outline with SEO keywords, H2/H3 structure, and word count guidance.",
+    fields: [
+      { id:"topic", label:"Blog Topic", type:"input", placeholder:"e.g. The Ultimate Guide to Email Marketing" },
+      { id:"audience", label:"Target Audience", type:"input", placeholder:"e.g. Small business owners" },
+      { id:"tone", label:"Tone", type:"select", options:["Professional","Conversational","Educational","Inspiring","Technical","Beginner-friendly"] }
+    ]
+  },
+  {
+    id: "hashtag_generator", icon: "#️⃣", color: "#22d3ee", label: "",
+    name: "Hashtag Strategy Generator",
+    desc: "30 hashtags across 3 tiers (high/mid/micro volume) with usage strategy for any platform.",
+    fields: [
+      { id:"topic", label:"Topic / Niche", type:"input", placeholder:"e.g. Fitness motivation" },
+      { id:"platform", label:"Platform", type:"select", options:["Instagram","TikTok","LinkedIn","Twitter/X","YouTube"] },
+      { id:"niche", label:"Specific Niche (optional)", type:"input", placeholder:"e.g. Home workouts for busy moms" }
+    ]
+  },
+  {
+    id: "linkedin_post", icon: "💼", color: "#0077b5", label: "",
+    name: "LinkedIn Post Writer",
+    desc: "High-performing LinkedIn posts with storytelling, hooks, and 100K+ impression structure.",
+    fields: [
+      { id:"topic", label:"Topic / Insight", type:"input", placeholder:"e.g. What I learned from failing my first startup" },
+      { id:"goal", label:"Goal", type:"select", options:["Build Thought Leadership","Share an Insight","Tell a Story","Announce Something","Ask a Question","Motivate Others","Share a Win"] },
+      { id:"background", label:"Your Angle / Background", type:"input", placeholder:"e.g. 5 years in marketing, now building my own brand" }
+    ]
+  },
+  {
+    id: "tiktok_caption", icon: "🎵", color: "#69c9d0", label: "",
+    name: "TikTok Caption Writer",
+    desc: "5 caption variations with trending hashtags, optimal posting times, and pinned comment ideas.",
+    fields: [
+      { id:"topic", label:"Video Topic", type:"input", placeholder:"e.g. Morning productivity routine" },
+      { id:"style", label:"Video Style", type:"select", options:["Educational","Entertainment","Motivation","Comedy","Lifestyle","Tutorial","POV"] },
+      { id:"target", label:"Target Audience", type:"input", placeholder:"e.g. Young professionals, Gen Z" }
+    ]
+  },
+  {
+    id: "resume_bullet", icon: "📄", color: "#34d399", label: "",
+    name: "Resume Bullet Points",
+    desc: "Achievement-focused resume bullets with metrics, ATS keywords, and professional summary.",
+    fields: [
+      { id:"role", label:"Target Job Title", type:"input", placeholder:"e.g. Digital Marketing Manager" },
+      { id:"experience", label:"Years of Experience", type:"select", options:["0-1 years","1-3 years","3-5 years","5-10 years","10+ years"] },
+      { id:"skills", label:"Key Skills", type:"input", placeholder:"e.g. SEO, content strategy, team leadership" },
+      { id:"industry", label:"Industry", type:"input", placeholder:"e.g. Tech, Healthcare, Finance, Marketing" }
+    ]
+  },
+  {
+    id: "email_writer", icon: "📧", color: "#fb923c", label: "",
+    name: "Email Writer",
+    desc: "Complete emails with subject lines, body, follow-up, and A/B test variants — for any purpose.",
+    fields: [
+      { id:"type", label:"Email Type", type:"select", options:["Cold Outreach","Follow-Up","Collaboration Request","Sales Pitch","Apology","Thank You","Newsletter","Job Application"] },
+      { id:"context", label:"Context / Purpose", type:"textarea", placeholder:"e.g. Reaching out to a YouTuber for a brand collaboration deal" },
+      { id:"recipient", label:"Recipient Role", type:"input", placeholder:"e.g. Marketing Director, Fellow Creator, CEO" }
+    ]
+  },
+  {
+    id: "instagram_bio", icon: "🌟", color: "#f59e0b", label: "",
+    name: "Instagram Bio Creator",
+    desc: "5 distinct bio variations with keyword strategy, CTA optimization, and personality hooks.",
+    fields: [
+      { id:"topic", label:"Your Niche / What You Do", type:"input", placeholder:"e.g. Personal Finance & Investing Coach" },
+      { id:"niche", label:"Sub-niche", type:"input", placeholder:"e.g. For millennials & Gen Z" },
+      { id:"cta", label:"Call to Action", type:"input", placeholder:"e.g. Free course below 👇" }
+    ]
+  }
+];
+
+// ── FAQ Data ──────────────────────────────────────────────────
+const FAQS = [
+  { q:"Is PromptNest AI free to use?", a:"Yes! All tools on PromptNest AI are free to use. The site is powered by a shared OpenAI API key on our server. No account or credit card required." },
+  { q:"Is this real AI or template-based?", a:"100% real AI. Every single response is freshly generated by OpenAI's GPT-4o model — not templates, not cached answers, not fake data. You'll get a unique result every time." },
+  { q:"How is my data handled?", a:"Your inputs are sent to our secure backend server, which forwards them to OpenAI's API. We don't store your prompts or outputs. OpenAI's privacy policy applies to the processing." },
+  { q:"Why do I get different results each time?", a:"Because it's real AI! GPT-4o generates a unique response for every request. This is a feature, not a bug — you can regenerate to get fresh variations." },
+  { q:"Which platforms are the tools optimized for?", a:"Tools are specifically designed and prompt-engineered for YouTube, TikTok, Instagram, LinkedIn, and general content creation. Each tool has platform-specific best practices baked into its AI prompts." },
+  { q:"Can I use the outputs commercially?", a:"Yes. The content generated is yours to use. OpenAI's usage policies apply, which generally permit commercial use of generated content. Always review the final output before publishing." },
+  { q:"How do I run this locally / on my own server?", a:"Download server.js and public/index.html, run 'npm install express cors', set your OPENAI_API_KEY environment variable, and run 'node server.js'. Full instructions are in the README." }
+];
+
+// ── State ─────────────────────────────────────────────────────
+let chatHistory = [];
+let currentTool = null;
+let isGenerating = false;
+let isChatting = false;
+
+// ── Init ──────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  renderTools();
+  renderFAQ();
+  initFadeIn();
+  checkServer();
+});
+
+// ── Check backend ─────────────────────────────────────────────
+async function checkServer() {
+  try {
+    const r = await fetch(`${API_BASE}/api/health`);
+    if (r.ok) {
+      const d = await r.json();
+      if (!d.hasApiKey) {
+        showToast('⚠️ Server running but OpenAI API key not set. Set OPENAI_API_KEY on the server.', 'error', 6000);
+      }
+    }
+  } catch(e) {
+    showToast('⚠️ Cannot connect to backend. Make sure server.js is running on port 3000.', 'error', 7000);
+  }
+}
+
+// ── Render Tools ──────────────────────────────────────────────
+function renderTools(filter = '') {
+  const grid = document.getElementById('toolsGrid');
+  const filtered = TOOLS.filter(t =>
+    t.name.toLowerCase().includes(filter.toLowerCase()) ||
+    t.desc.toLowerCase().includes(filter.toLowerCase())
+  );
+  grid.innerHTML = filtered.map((t, i) => `
+    <div class="tool-card" onclick="openTool(${TOOLS.indexOf(t)})" style="animation:heroIn .5s ease ${i*0.05}s both">
+      <div class="tool-icon" style="background:${t.color}22">${t.icon}</div>
+      ${t.label ? `<div class="tool-badge ${t.label==='HOT'?'hot':''}">${t.label}</div>` : ''}
+      <h3>${t.name}</h3>
+      <p>${t.desc}</p>
+    </div>
+  `).join('');
+  if (!filtered.length) grid.innerHTML = `<p style="color:var(--text3);grid-column:1/-1;text-align:center;padding:40px">No tools match "${filter}"</p>`;
+}
+
+function filterTools(v) { renderTools(v); }
+
+// ── Render FAQ ────────────────────────────────────────────────
+function renderFAQ() {
+  document.getElementById('faqList').innerHTML = FAQS.map((f, i) => `
+    <div class="faq-item" id="faq${i}">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        <span>${f.q}</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="faq-a">${f.a}</div>
+    </div>
+  `).join('');
+}
+
+function toggleFAQ(i) {
+  const el = document.getElementById(`faq${i}`);
+  el.classList.toggle('open');
+}
+
+// ── Open Tool Modal ───────────────────────────────────────────
+function openTool(idx) {
+  currentTool = TOOLS[idx];
+  const t = currentTool;
+  const fields = t.fields.map(f => {
+    if (f.type === 'select') return `
+      <div class="form-group">
+        <label>${f.label}</label>
+        <select id="field_${f.id}">
+          ${f.options.map(o => `<option>${o}</option>`).join('')}
+        </select>
+      </div>`;
+    if (f.type === 'textarea') return `
+      <div class="form-group">
+        <label>${f.label}</label>
+        <textarea id="field_${f.id}" placeholder="${f.placeholder||''}" rows="3"></textarea>
+      </div>`;
+    return `
+      <div class="form-group">
+        <label>${f.label}</label>
+        <input type="text" id="field_${f.id}" placeholder="${f.placeholder||''}"/>
+      </div>`;
+  }).join('');
+
+  document.getElementById('modalContent').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-tool-icon">${t.icon}</div>
+    <h2>${t.name}</h2>
+    <p class="modal-subtitle">${t.desc} — Powered by OpenAI GPT-4o.</p>
+    ${fields}
+    <div class="modal-actions">
+      <button class="btn-generate" id="genBtn" onclick="generate()">
+        <span>✨ Generate with AI</span>
+      </button>
+      <button class="btn-regen" id="regenBtn" onclick="generate()" disabled>🔄 Regenerate</button>
+    </div>
+    <div id="errorMsg"></div>
+    <div class="output-area" id="outputArea">
+      <div class="output-box">
+        <div class="output-header">
+          <div>
+            <div class="output-label">✅ AI Generated Result</div>
+            <div class="output-meta" id="outputMeta">GPT-4o · Real AI</div>
+          </div>
+          <button class="btn-copy" onclick="copyOutput()">📋 Copy</button>
+        </div>
+        <div class="output-content" id="outputContent"></div>
+      </div>
+    </div>
+  `;
+  document.getElementById('toolModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('toolModal').classList.remove('active');
+  document.body.style.overflow = '';
+  currentTool = null;
+}
+
+// Close on overlay click
+document.getElementById('toolModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ── Generate ──────────────────────────────────────────────────
+async function generate() {
+  if (isGenerating || !currentTool) return;
+  const t = currentTool;
+
+  // Collect inputs
+  const inputs = {};
+  for (const f of t.fields) {
+    const el = document.getElementById(`field_${f.id}`);
+    inputs[f.id] = el ? el.value.trim() : '';
+  }
+
+  // Validate primary field
+  const primaryKey = t.fields[0]?.id;
+  if (!inputs[primaryKey]) {
+    showError('Please fill in the required field to generate content.');
+    return;
+  }
+
+  isGenerating = true;
+  const genBtn = document.getElementById('genBtn');
+  const regenBtn = document.getElementById('regenBtn');
+  const outputArea = document.getElementById('outputArea');
+  const outputContent = document.getElementById('outputContent');
+  const errorMsg = document.getElementById('errorMsg');
+
+  genBtn.disabled = true;
+  regenBtn.disabled = true;
+  genBtn.innerHTML = `<span class="spin"></span> Generating…`;
+  errorMsg.innerHTML = '';
+  outputArea.classList.remove('visible');
+
+  try {
+    const res = await fetch(`${API_BASE}/api/generate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tool: t.id, inputs })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Generation failed');
+
+    outputContent.textContent = data.result;
+    document.getElementById('outputMeta').textContent = `Model: ${data.model} · ${new Date().toLocaleTimeString()}`;
+    outputArea.classList.add('visible');
+    outputArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast('✅ AI content generated!', 'success');
+  } catch(e) {
+    showError(e.message);
+    showToast('❌ Generation failed: ' + e.message, 'error');
+  } finally {
+    isGenerating = false;
+    genBtn.disabled = false;
+    regenBtn.disabled = false;
+    genBtn.innerHTML = `<span>✨ Generate with AI</span>`;
+  }
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  if (el) el.innerHTML = `<div class="error-msg">⚠️ ${msg}</div>`;
+}
+
+// ── Copy ──────────────────────────────────────────────────────
+function copyOutput() {
+  const text = document.getElementById('outputContent').textContent;
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('📋 Copied to clipboard!', 'success'))
+    .catch(() => showToast('Copy failed — select and copy manually.', 'error'));
+}
+
+// ── Chat ──────────────────────────────────────────────────────
+function useSuggestion(el) {
+  document.getElementById('chatInput').value = el.textContent;
+  sendChat();
+}
+
+function chatKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendChat();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function appendMsg(role, text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatar = role === 'ai' ? '🤖' : '👤';
+  div.innerHTML = `<div class="msg-avatar">${avatar}</div><div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.id = 'typingMsg';
+  div.innerHTML = `<div class="msg-avatar">🤖</div><div class="msg-bubble"><div class="typing-indicator"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typingMsg');
+  if (el) el.remove();
+}
+
+async function sendChat() {
+  if (isChatting) return;
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  isChatting = true;
+  const sendBtn = document.getElementById('sendBtn');
+  sendBtn.disabled = true;
+  input.value = '';
+  input.style.height = 'auto';
+
+  appendMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+  showTyping();
+
+  try {
+    const res = await fetch(`${API_BASE}/api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: chatHistory })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Chat failed');
+
+    removeTyping();
+    appendMsg('ai', data.result);
+    chatHistory.push({ role: 'assistant', content: data.result });
+
+    // Keep history manageable (last 20 messages)
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+  } catch(e) {
+    removeTyping();
+    appendMsg('ai', `⚠️ Error: ${e.message}. Make sure the server is running.`);
+  } finally {
+    isChatting = false;
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
+// ── Theme ─────────────────────────────────────────────────────
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  const isLight = document.body.classList.contains('light');
+  document.getElementById('themeBtn').textContent = isLight ? '🌙 Dark' : '☀️ Light';
+  localStorage.setItem('pn_theme', isLight ? 'light' : 'dark');
+}
+
+// Restore theme
+(function() {
+  if (localStorage.getItem('pn_theme') === 'light') {
+    document.body.classList.add('light');
+    document.getElementById('themeBtn') && (document.getElementById('themeBtn').textContent = '🌙 Dark');
+  }
+})();
+
+// ── Mobile Nav ────────────────────────────────────────────────
+function toggleMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+}
+
+// ── Toast ─────────────────────────────────────────────────────
+function showToast(msg, type = 'info', duration = 3500) {
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => el.remove(), duration);
+}
+
+// ── Fade-In Observer ──────────────────────────────────────────
+function initFadeIn() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+}
+</script>
+</body>
+</html>
