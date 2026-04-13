@@ -1,6 +1,6 @@
 // ============================================================
 // PromptNest AI — Backend Server
-// Node.js + Express + OpenAI API
+// Node.js + Express + Anthropic Claude API
 // Run: node server.js
 // ============================================================
 
@@ -8,43 +8,67 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
-const express = require("express");
-const app = express();
-
-app.use(express.static("public"));
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/index.html");
-});
-
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-
 
 // ── Middleware ────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// ── OpenAI Key (set via env var — never hardcode!) ──────────
-// Before running, set your key:
-//   Windows:  set OPENAI_API_KEY=sk-...
-//   Mac/Linux: export OPENAI_API_KEY=sk-...
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+// ── Simple In-Memory Rate Limiter ─────────────────────────────
+// Limits each IP to 30 requests per 15 minutes
+const rateLimitMap = new Map();
+const RATE_LIMIT = 30;
+const RATE_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 
-if (!OPENAI_API_KEY) {
-  console.warn("⚠️  WARNING: OPENAI_API_KEY environment variable is not set.");
-  console.warn("   Set it before starting the server:");
-  console.warn("   export OPENAI_API_KEY=sk-your-key-here");
+function rateLimit(req, res, next) {
+  const ip = req.ip || req.connection.remoteAddress || "unknown";
+  const now = Date.now();
+  const windowStart = now - RATE_WINDOW_MS;
 
-  app.use(cors());
-app.use(express.json());
+  if (!rateLimitMap.has(ip)) {
+    rateLimitMap.set(ip, []);
+  }
 
-app.use(express.static("public"));  
+  // Remove timestamps outside current window
+  const timestamps = rateLimitMap.get(ip).filter(t => t > windowStart);
+  timestamps.push(now);
+  rateLimitMap.set(ip, timestamps);
+
+  if (timestamps.length > RATE_LIMIT) {
+    return res.status(429).json({
+      error: "Too many requests. Please wait a few minutes and try again."
+    });
+  }
+
+  next();
 }
 
-// ── System prompts per tool ───────────────────────────────────
+// Clean up old entries every 30 minutes
+setInterval(() => {
+  const cutoff = Date.now() - RATE_WINDOW_MS;
+  for (const [ip, timestamps] of rateLimitMap.entries()) {
+    const fresh = timestamps.filter(t => t > cutoff);
+    if (fresh.length === 0) rateLimitMap.delete(ip);
+    else rateLimitMap.set(ip, fresh);
+  }
+}, 30 * 60 * 1000);
+
+// ── Anthropic API Key ─────────────────────────────────────────
+// Set before running:
+//   Windows:  set ANTHROPIC_API_KEY=sk-ant-...
+//   Mac/Linux: export ANTHROPIC_API_KEY=sk-ant-...
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const CLAUDE_MODEL = "claude-sonnet-4-20250514";
+
+if (!ANTHROPIC_API_KEY) {
+  console.warn("⚠️  WARNING: ANTHROPIC_API_KEY environment variable is not set.");
+  console.warn("   Get your key at: https://console.anthropic.com");
+  console.warn("   Then run: export ANTHROPIC_API_KEY=sk-ant-your-key-here");
+}
+
+// ── System Prompts Per Tool ───────────────────────────────────
 const TOOL_SYSTEM_PROMPTS = {
   youtube_title: `You are an expert YouTube SEO and content strategist with 10+ years of experience growing channels.
 Generate 10 highly clickable, SEO-optimized YouTube video titles.
@@ -169,7 +193,21 @@ Each bio should:
 Label each: [Authority], [Story-Driven], [Niche-Specific], [Minimal], [Personality-Forward]
 Also provide: Bio keyword strategy + profile name optimization tip.`,
 
-  chat: `You are PromptNest AI — a powerful, versatile AI assistant designed to help content creators, marketers, entrepreneurs, and professionals get more done.
+  business_idea: `You are a world-class entrepreneurship coach, startup strategist, and business model expert.
+Generate 5 unique, actionable business ideas for the given niche/interest.
+For each idea provide:
+1. Business Name (catchy, brandable)
+2. One-Line Pitch
+3. Target Audience (specific)
+4. Revenue Model (how it makes money)
+5. Startup Cost Estimate (low/medium/high + rough range)
+6. Time to First Revenue
+7. Key Competitive Advantage
+8. First 3 Action Steps to launch
+End with: The #1 Recommended idea and why, plus a "secret weapon" strategy to outcompete.
+Be specific, realistic, and inspiring.`,
+
+  chat: `You are PromptNest AI — a powerful, versatile AI assistant powered by Anthropic Claude, designed to help content creators, marketers, entrepreneurs, and professionals get more done.
 You excel at:
 - Content creation (social media, blogs, scripts, emails)
 - Marketing strategy and copywriting
@@ -182,34 +220,36 @@ When appropriate, structure responses with headers, bullets, or numbered lists f
 Always aim to give more value than expected.`
 };
 
-// ── OpenAI API helper ─────────────────────────────────────────
-async function callOpenAI(systemPrompt, userMessage, maxTokens = 1200) {
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+// ── Anthropic API Helper ──────────────────────────────────────
+async function callClaude(systemPrompt, userMessage, maxTokens = 1200) {
+  const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${OPENAI_API_KEY}`
+      "x-api-key": ANTHROPIC_API_KEY,
+      "anthropic-version": "2023-06-01"
     },
     body: JSON.stringify({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userMessage }
-      ],
+      model: CLAUDE_MODEL,
       max_tokens: maxTokens,
-      temperature: 0.8,
-      presence_penalty: 0.1,
-      frequency_penalty: 0.2
+      system: systemPrompt,
+      messages: [
+        { role: "user", content: userMessage }
+      ]
     })
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.error?.message || `OpenAI API error: ${response.status}`);
+    throw new Error(
+      error.error?.message ||
+      `Anthropic API error: ${response.status} ${response.statusText}`
+    );
   }
 
   const data = await response.json();
-  return data.choices[0].message.content;
+  // Claude returns content as an array of blocks
+  return data.content.map(block => block.text || "").join("");
 }
 
 // ── Routes ────────────────────────────────────────────────────
@@ -218,28 +258,31 @@ async function callOpenAI(systemPrompt, userMessage, maxTokens = 1200) {
 app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
-    hasApiKey: !!OPENAI_API_KEY,
-    model: "gpt-4o-mini",
+    hasApiKey: !!ANTHROPIC_API_KEY,
+    model: CLAUDE_MODEL,
     timestamp: new Date().toISOString()
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-    
   });
 });
 
 // Main generation endpoint
-app.post("/api/generate", async (req, res) => {
+app.post("/api/generate", rateLimit, async (req, res) => {
   const { tool, inputs } = req.body;
 
-  if (!OPENAI_API_KEY) {
+  if (!ANTHROPIC_API_KEY) {
     return res.status(500).json({
-      error: "OpenAI API key not configured. Set OPENAI_API_KEY environment variable on the server."
+      error: "Anthropic API key not configured. Set ANTHROPIC_API_KEY environment variable on the server."
     });
   }
 
   if (!tool || !inputs) {
     return res.status(400).json({ error: "Missing 'tool' or 'inputs' in request body." });
+  }
+
+  // Input validation — reject overly long inputs
+  for (const val of Object.values(inputs)) {
+    if (typeof val === "string" && val.length > 1000) {
+      return res.status(400).json({ error: "Input too long. Please keep inputs under 1000 characters." });
+    }
   }
 
   const systemPrompt = TOOL_SYSTEM_PROMPTS[tool] || TOOL_SYSTEM_PROMPTS.chat;
@@ -318,6 +361,13 @@ CTA: ${inputs.cta || "Check link in bio"}
 Personality: ${inputs.personality || "Authentic and relatable"}`;
       break;
 
+    case "business_idea":
+      userMessage = `Generate business ideas for: "${inputs.niche}"
+Budget range: ${inputs.budget || "Low (under $1000)"}
+Skills/Background: ${inputs.skills || "General / Willing to learn"}
+Goal: ${inputs.goal || "Build passive income"}`;
+      break;
+
     case "chat":
     default:
       userMessage = inputs.message || inputs.topic || "";
@@ -325,51 +375,56 @@ Personality: ${inputs.personality || "Authentic and relatable"}`;
   }
 
   try {
-    const result = await callOpenAI(systemPrompt, userMessage, tool === "blog_outline" ? 2000 : 1400);
-    res.json({ result, tool, model: "gpt-4o-mini" });
+    const maxTokens = ["blog_outline", "business_idea"].includes(tool) ? 2000 : 1400;
+    const result = await callClaude(systemPrompt, userMessage, maxTokens);
+    res.json({ result, tool, model: CLAUDE_MODEL });
   } catch (err) {
     console.error(`[Generate Error] Tool: ${tool}`, err.message);
     res.status(500).json({ error: err.message });
   }
 });
 
-// Chat endpoint (streaming-ready, kept simple for compatibility)
-app.post("/api/chat", async (req, res) => {
+// Chat endpoint
+app.post("/api/chat", rateLimit, async (req, res) => {
   const { messages } = req.body;
 
-  if (!OPENAI_API_KEY) {
-    return res.status(500).json({ error: "OpenAI API key not configured on server." });
+  if (!ANTHROPIC_API_KEY) {
+    return res.status(500).json({ error: "Anthropic API key not configured on server." });
   }
 
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({ error: "Missing 'messages' array." });
   }
 
+  // Validate message count
+  if (messages.length > 40) {
+    return res.status(400).json({ error: "Too many messages in conversation history." });
+  }
+
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENAI_API_KEY}`
+        "x-api-key": ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01"
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: TOOL_SYSTEM_PROMPTS.chat },
-          ...messages
-        ],
+        model: CLAUDE_MODEL,
         max_tokens: 1500,
-        temperature: 0.8
+        system: TOOL_SYSTEM_PROMPTS.chat,
+        messages: messages // Already in {role, content} format
       })
     });
 
     if (!response.ok) {
       const error = await response.json();
-      throw new Error(error.error?.message || "OpenAI error");
+      throw new Error(error.error?.message || "Anthropic API error");
     }
 
     const data = await response.json();
-    res.json({ result: data.choices[0].message.content, model: "gpt-4o-mini" });
+    const result = data.content.map(block => block.text || "").join("");
+    res.json({ result, model: CLAUDE_MODEL });
   } catch (err) {
     console.error("[Chat Error]", err.message);
     res.status(500).json({ error: err.message });
@@ -384,9 +439,7 @@ app.get("*", (req, res) => {
 // ── Start ─────────────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`\n✅ PromptNest AI server running at http://localhost:${PORT}`);
-  console.log(`   OpenAI key: ${OPENAI_API_KEY ? "✅ Set" : "❌ NOT SET — set OPENAI_API_KEY env var"}`);
-  console.log(`   Model: gpt-4o-mini\n`);
-  app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  console.log(`   Anthropic key: ${ANTHROPIC_API_KEY ? "✅ Set" : "❌ NOT SET — set ANTHROPIC_API_KEY env var"}`);
+  console.log(`   Model: ${CLAUDE_MODEL}`);
+  console.log(`   Rate limit: ${RATE_LIMIT} requests per 15 minutes per IP\n`);
 });
