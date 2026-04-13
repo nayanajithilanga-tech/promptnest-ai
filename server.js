@@ -20,6 +20,8 @@ app.get("/", (req, res) => {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
+
 // ── Middleware ────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
@@ -35,6 +37,11 @@ if (!OPENAI_API_KEY) {
   console.warn("⚠️  WARNING: OPENAI_API_KEY environment variable is not set.");
   console.warn("   Set it before starting the server:");
   console.warn("   export OPENAI_API_KEY=sk-your-key-here");
+
+  app.use(cors());
+app.use(express.json());
+
+app.use(express.static("public"));  
 }
 
 // ── System prompts per tool ───────────────────────────────────
@@ -214,6 +221,10 @@ app.get("/api/health", (req, res) => {
     hasApiKey: !!OPENAI_API_KEY,
     model: "gpt-4o-mini",
     timestamp: new Date().toISOString()
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+    
   });
 });
 
@@ -375,4 +386,7 @@ app.listen(PORT, () => {
   console.log(`\n✅ PromptNest AI server running at http://localhost:${PORT}`);
   console.log(`   OpenAI key: ${OPENAI_API_KEY ? "✅ Set" : "❌ NOT SET — set OPENAI_API_KEY env var"}`);
   console.log(`   Model: gpt-4o-mini\n`);
+  app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 });
